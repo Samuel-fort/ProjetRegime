@@ -21,6 +21,10 @@ $routes->get('/logout', 'AuthController::logout');
 $routes->group('', ['filter' => 'userAuth'], static function ($routes) {
 	$routes->get('user/dashboard', 'Dashboard::index');
 	$routes->match(['get', 'post'], 'profil/modifier', 'Profil::modifier');
+	$routes->get('wallet', 'WalletController::index');
+	$routes->get('wallet/test', 'WalletController::test');
+	$routes->get('wallet/solde', 'WalletController::solde');
+	$routes->post('wallet/valider_code', 'WalletController::validerCode');
 });
 
 // Routes admin
@@ -41,10 +45,3 @@ $routes->get('admin/codes',                    'AdminController::codes');
 $routes->get('admin/codes/create',             'AdminController::codeCreate');
 $routes->post('admin/codes/store',             'AdminController::codeStore');
 $routes->get('admin/codes/delete/(:num)',      'AdminController::codeDelete/$1');
-
-
-// Routes porte feuille
-$routes->get('/wallet', 'WalletController::index');
-$routes->get('/wallet/test', 'WalletController::test');
-$routes->get('/wallet/solde', 'WalletController::solde');
-$routes->post('/wallet/valider_code', 'WalletController::validerCode');
