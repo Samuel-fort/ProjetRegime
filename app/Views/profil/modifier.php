@@ -9,14 +9,16 @@
     <main>
         <h1>Modifier mon profil</h1>
 
-        <?php /** @var array<string, string> $errors */ ?>
-        <?php /** @var array<string, mixed> $user */ ?>
+        <?php
+        $errorsList = array_map('strval', $errors ?? []);
+        $user = $user ?? [];
+        ?>
 
-        <?php if (! empty($errors)): ?>
+        <?php if (! empty($errorsList)): ?>
             <div>
                 <ul>
-                    <?php foreach ($errors as $error): ?>
-                        <li><?= esc($error) ?></li>
+                    <?php foreach ($errorsList as $error): ?>
+                        <li><?= esc((string) $error) ?></li>
                     <?php endforeach; ?>
                 </ul>
             </div>
