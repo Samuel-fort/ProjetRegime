@@ -39,7 +39,7 @@
 
 </form>
 
-<p>Pas encore de compte ? <a href="<?= base_url('register') ?>">S'inscrire</a></p>
+<p>Pas encore de compte ? <a href="<?= base_url('/register') ?>">S'inscrire</a></p>
 
 </body>
 </html>
