@@ -86,6 +86,36 @@ CREATE TABLE parametres (
     valeur VARCHAR(255) NOT NULL
 );
 
+/*---------------------------------------------------------------*/
+/* Base Porte feuille */
+CREATE TABLE wallet (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    user_id INT NOT NULL,
+    solde DECIMAL(10,2) DEFAULT 0.00,
+    FOREIGN KEY (user_id) REFERENCES users(id)
+);
+
+CREATE TABLE wallet_codes (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    code VARCHAR(50) UNIQUE NOT NULL,
+    montant DECIMAL(10,2) NOT NULL,
+    is_used BOOLEAN DEFAULT FALSE,
+    used_by INT NULL,
+    used_at DATETIME NULL,
+    FOREIGN KEY (used_by) REFERENCES users(id)
+);
+
+CREATE TABLE wallet_transactions (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    user_id INT NOT NULL,
+    type ENUM('credit', 'debit') NOT NULL,
+    montant DECIMAL(10,2) NOT NULL,
+    description VARCHAR(255),
+    created_at DATETIME DEFAULT NOW(),
+    FOREIGN KEY (user_id) REFERENCES users(id)
+);
+
+/*---------------------------------------------------------------*/
 
 -- 1 admin  (mdp en clair : password)
 INSERT INTO admins (email, mot_de_passe) VALUES

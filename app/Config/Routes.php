@@ -17,6 +17,9 @@ $routes->get('/login',  'AuthController::login');
 $routes->post('/login', 'AuthController::loginPost');
 $routes->get('/logout', 'AuthController::logout');
 
+// Routes utilisateur
+$routes->get('user/dashboard', 'Home::index');
+
 // Routes admin
 $routes->get('admin/dashboard',                'AdminController::dashboard');
 $routes->get('admin/regimes',                  'AdminController::regimes');
@@ -35,3 +38,9 @@ $routes->get('admin/codes',                    'AdminController::codes');
 $routes->get('admin/codes/create',             'AdminController::codeCreate');
 $routes->post('admin/codes/store',             'AdminController::codeStore');
 $routes->get('admin/codes/delete/(:num)',      'AdminController::codeDelete/$1');
+
+
+// Routes porte feuille
+$routes->get('/wallet/test', 'WalletController::test');
+$routes->get('/wallet/solde', 'WalletController::solde');
+$routes->post('/wallet/valider_code', 'WalletController::validerCode');

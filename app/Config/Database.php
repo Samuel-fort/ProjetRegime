@@ -26,7 +26,7 @@ class Database extends Config
      */
     public array $default = [
         'DSN'          => '',
-        'hostname'     => 'localhost',
+        'hostname'     => '127.0.0.1',
         'username'     => 'root',
         'password'     => '',
         'database'     => 'Regime_DB',
@@ -42,6 +42,7 @@ class Database extends Config
         'strictOn'     => false,
         'failover'     => [],
         'port'         => 3306,
+        'socket'       => '/opt/lampp/var/mysql/mysql.sock',
         'numberNative' => false,
         'foundRows'    => false,
         'dateFormat'   => [

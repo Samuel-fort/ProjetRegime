@@ -80,6 +80,15 @@ class Exceptions extends BaseConfig
      */
     public string $deprecationLogLevel = LogLevel::WARNING;
 
+    /**
+     * --------------------------------------------------------------------------
+     * DISABLE WHOOPS - Use Plain PHP Error Display
+     * --------------------------------------------------------------------------
+     * If set to true, plain PHP errors will be displayed instead of Whoops.
+     * This is useful for development when you want simple, direct error messages.
+     */
+    public bool $disableWhoops = true;
+
     /*
      * DEFINE THE HANDLERS USED
      * --------------------------------------------------------------------------
@@ -101,6 +110,13 @@ class Exceptions extends BaseConfig
      */
     public function handler(int $statusCode, Throwable $exception): ExceptionHandlerInterface
     {
+        // Use plain exception handler instead of Whoops
+        if ($this->disableWhoops) {
+            return new \App\Libraries\PlainExceptionHandler($exception, $statusCode);
+        }
+
         return new ExceptionHandler($this);
     }
 }
+
+

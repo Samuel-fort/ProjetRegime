@@ -1,8 +1,14 @@
 CI_ENVIRONMENT = development
 
-app.baseURL = 'http://localhost/ProjetRegime/public'
+app.baseURL = 'http://localhost:8080/'
 
-database.default.hostname = localhost
+# Debug et affichage des erreurs en développement
+app.debug = true
+
+# Désactiver le gestionnaire d'erreurs personnalisé et afficher les erreurs directement
+error.errorException = true
+
+database.default.hostname = 127.0.0.1
 database.default.database = Regime_DB
 database.default.username = root
 database.default.password = 
