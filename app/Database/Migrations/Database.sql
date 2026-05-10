@@ -87,11 +87,11 @@ CREATE TABLE parametres (
 );
 
 
--- 1 admin  (mdp en clair : Admin1234!)
+-- 1 admin  (mdp en clair : password)
 INSERT INTO admins (email, mot_de_passe) VALUES
 ('admin@gmail.fr', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi');
 
--- 5 utilisateurs (mdp en clair : Password1!)
+-- 5 utilisateurs (mdp en clair : password)
 INSERT INTO users (nom, email, mot_de_passe, genre, taille, poids, imc, wallet, is_gold, date_gold, created_at) VALUES
 ('Alice Martin',  'alice@gmail.com', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'femme', 165, 55,  ROUND(55  /(1.65*1.65),2),  50.00, 0, NULL,                 '2025-12-01 10:00:00'),
 ('Bob Dupont',    'bob@gmail.com',   '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'homme', 178, 95,  ROUND(95  /(1.78*1.78),2),  20.00, 1, '2026-01-15 09:00:00','2025-12-05 11:00:00'),
