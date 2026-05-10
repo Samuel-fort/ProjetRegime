@@ -119,4 +119,71 @@ class AuthController extends Controller
 
         return redirect()->to('/login');
     }
+
+    // Afficher le formulaire de connexion
+    public function login()
+    {
+        // Si déjà connecté, rediriger
+        $session = session();
+        if ($session->get('user_id')) {
+            return redirect()->to(base_url('user/dashboard'));
+        }
+        if ($session->get('admin_id')) {
+            return redirect()->to(base_url('admin/dashboard'));
+        }
+    
+        return view('auth/login');
+    }
+    
+    // Traiter la connexion
+    public function loginPost()
+    {
+        $session = session();
+        $email   = $this->request->getPost('email');
+        $mdp     = $this->request->getPost('mot_de_passe');
+        $errors  = [];
+    
+        if (empty($email) || empty($mdp)) {
+            $errors[] = "Email et mot de passe obligatoires.";
+            return view('auth/login', ['errors' => $errors]);
+        }
+    
+        // Vérifier si c'est un admin
+        $adminModel = new \App\Models\AdminModel();
+        $admin      = $adminModel->where('email', $email)->first();
+    
+        if ($admin && password_verify($mdp, $admin['mot_de_passe'])) {
+            $session->set([
+                'admin_id'    => $admin['id'],
+                'admin_email' => $admin['email'],
+                'is_admin'    => true,
+            ]);
+            return redirect()->to(base_url('admin/dashboard'));
+        }
+    
+        // Vérifier si c'est un utilisateur
+        $userModel = new \App\Models\UserModel();
+        $user      = $userModel->where('email', $email)->first();
+    
+        if ($user && password_verify($mdp, $user['mot_de_passe'])) {
+            $session->set([
+                'user_id'    => $user['id'],
+                'user_nom'   => $user['nom'],
+                'user_email' => $user['email'],
+                'is_gold'    => $user['is_gold'],
+            ]);
+            return redirect()->to(base_url('user/dashboard'));
+        }
+    
+        // Aucun match
+        $errors[] = "Email ou mot de passe incorrect.";
+        return view('auth/login', ['errors' => $errors]);
+    }
+    
+    // Déconnexion
+    public function logout()
+    {
+        session()->destroy();
+        return redirect()->to(base_url('login'));
+    }
 }

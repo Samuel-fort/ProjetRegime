@@ -62,7 +62,7 @@
 
 </form>
 
-<p>Déjà un compte ? <a href="/login">Se connecter</a></p>
+<p>Déjà un compte ? <a href="<?= base_url('/') ?>">Se connecter</a></p>
 
 </body>
 </html>
