@@ -20,10 +20,10 @@
 </ul>
 
 <nav>
-    <a href="<?= base_url('admin/regimes') ?>">Gérer les régimes</a> |
-    <a href="<?= base_url('admin/activites') ?>">Gérer les activités</a> |
-    <a href="<?= base_url('admin/codes') ?>">Gérer les codes wallet</a> |
-    <a href="<?= base_url('logout') ?>">Se déconnecter</a>
+    <a href="<?= base_url('/admin/regimes') ?>">Gérer les régimes</a> |
+    <a href="<?= base_url('/admin/activites') ?>">Gérer les activités</a> |
+    <a href="<?= base_url('/admin/codes') ?>">Gérer les codes wallet</a> |
+    <a href="<?= base_url('/logout') ?>">Se déconnecter</a>
 </nav>
 
 </body>
