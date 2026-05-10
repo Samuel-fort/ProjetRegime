@@ -41,6 +41,7 @@ $routes->get('admin/codes/delete/(:num)',      'AdminController::codeDelete/$1')
 
 
 // Routes porte feuille
+$routes->get('/wallet', 'WalletController::index');
 $routes->get('/wallet/test', 'WalletController::test');
 $routes->get('/wallet/solde', 'WalletController::solde');
 $routes->post('/wallet/valider_code', 'WalletController::validerCode');

@@ -39,7 +39,7 @@ $is_gold = $session->get('is_gold');
     <div class="section">
         <h2>Portefeuille</h2>
         <p>Gérez votre solde et validez des codes</p>
-        <a href="<?= base_url('wallet/test') ?>">Accéder au portefeuille</a>
+        <a href="<?= base_url('wallet') ?>">Accéder au portefeuille</a>
     </div>
 
     <div class="section">

@@ -77,4 +77,18 @@ class WalletController extends Controller
         
         return view('wallet/test');
     }
+
+    // Afficher la vraie page du portefeuille
+    public function index()
+    {
+        $session = session();
+        if (!$session->get('user_id')) {
+            return redirect()->to('/login');
+        }
+
+        $userModel = new UserModel();
+        $user = $userModel->find($session->get('user_id'));
+
+        return view('wallet/index', ['user_solde' => $user['wallet']]);
+    }
 }

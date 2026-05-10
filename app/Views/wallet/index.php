@@ -1,7 +1,16 @@
+<?php
+$session = session();
+if (!$session->get('user_id')) {
+    return redirect()->to(base_url('login'));
+}
+
+$user_nom = $session->get('user_nom');
+$solde_actuel = $user_solde ?? 0; // Va être défini par le contrôleur
+?>
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Test fotsny</title>
+    <title>Mon Portefeuille</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -98,15 +107,33 @@
             border: none;
             border-top: 1px solid #ddd;
         }
+
+        .nav-back {
+            margin-bottom: 20px;
+        }
+
+        .nav-back a {
+            color: #007bff;
+            text-decoration: none;
+        }
+
+        .nav-back a:hover {
+            text-decoration: underline;
+        }
     </style>
 </head>
 <body>
 <div class="container">
-    <h3>Test Validation Code Wallet</h3>
+    <div class="nav-back">
+        <a href="<?= base_url('user/dashboard') ?>">Retour au dashboard</a>
+    </div>
+
+    <h3>Mon Portefeuille</h3>
+    <p>Bienvenue, <?= htmlspecialchars($user_nom) ?></p>
 
     <div>
         <h5>Solde actuel</h5>
-        <p>Solde: <span id="solde">0.00</span> €</p>
+        <p>Solde: <span id="solde"><?= number_format($solde_actuel, 2, ',', '') ?></span> €</p>
     </div>
 
     <div>
@@ -123,7 +150,7 @@
     <hr>
 
     <div>
-        <label for="code_input">Entrez un code :</label>
+        <label for="code_input">Valider un code :</label>
         <input type="text" id="code_input" placeholder="Ex: BIENV-A1B2C3">
     </div>
 
@@ -162,7 +189,7 @@ $(document).ready(function() {
             success: function(response) {
                 if (response.status === 'success') {
                     afficherSucces(response.message + ' (+ ' + response.montant.toFixed(2) + ' €)');
-                    $('#solde').text(response.solde.toFixed(2));
+                    $('#solde').text(response.solde.toFixed(2).replace('.', ','));
                     $('#code_input').val('');
                     ajouterTransaction(response.montant, code);
                 } else {
@@ -196,7 +223,7 @@ $(document).ready(function() {
             dataType: 'json',
             success: function(response) {
                 if (response.status === 'success') {
-                    $('#solde').text(response.solde.toFixed(2));
+                    $('#solde').text(response.solde.toFixed(2).replace('.', ','));
                 }
             }
         });
