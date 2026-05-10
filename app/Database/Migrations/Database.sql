@@ -175,3 +175,5 @@ INSERT INTO codes_wallet (code, montant, is_used) VALUES
 INSERT INTO parametres (cle, valeur) VALUES
 ('prix_gold',        '90000'),
 ('taux_remise_gold', '15');
+
+ALTER TABLE users ADD COLUMN objectif ENUM('augmenter','reduire','imc_ideal') NULL DEFAULT NULL;
