@@ -23,7 +23,7 @@ class Profil extends BaseController
             return redirect()->to(base_url('login'));
         }
 
-        if ($this->request->getMethod() === 'post') {
+        if (strtolower($this->request->getMethod()) === 'post') {
             $rules = [
                 'nom' => 'required|min_length[2]',
                 'email' => 'required|valid_email|is_unique[users.email,id,' . $userId . ']',

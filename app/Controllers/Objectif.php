@@ -23,7 +23,7 @@ class Objectif extends BaseController
             return redirect()->to(base_url('login'));
         }
 
-        if ($this->request->getMethod() === 'post') {
+        if (strtolower($this->request->getMethod()) === 'post') {
             $objectif = (string) $this->request->getPost('objectif');
             $allowed = ['augmenter', 'reduire', 'imc_ideal'];
 
