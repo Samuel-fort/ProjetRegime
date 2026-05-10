@@ -1,9 +1,12 @@
 <!DOCTYPE html>
+<<<<<<< HEAD
 <?php
 /*
  * Vue des suggestions de régimes et activités sportives selon l'objectif de l'utilisateur
  */
 ?>
+=======
+>>>>>>> correction
 <html lang="fr">
 <head>
     <meta charset="UTF-8">

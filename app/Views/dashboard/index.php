@@ -48,7 +48,7 @@
         <nav>
             <a href="<?= base_url('profil/modifier') ?>">Modifier le profil</a><br>
             <a href="<?= base_url('objectif/choisir') ?>">Choisir un objectif</a><br>
-            <a href="<?= base_url('#') ?>">Wallet</a>
+            <a href="<?= base_url('wallet') ?>">Wallet</a>
         </nav>
     </main>
 </body>
