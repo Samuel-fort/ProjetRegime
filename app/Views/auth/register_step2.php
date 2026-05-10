@@ -17,7 +17,7 @@
     </ul>
 <?php endif; ?>
 
-<form action="/register/step2" method="post">
+<form action="<?= base_url('register/step2') ?>" method="post">
     <?= csrf_field() ?>
 
     <div>
