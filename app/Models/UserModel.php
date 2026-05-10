@@ -11,7 +11,7 @@ class UserModel extends Model
 
     protected $allowedFields = [
         'nom', 'email', 'mot_de_passe', 'genre',
-        'taille', 'poids', 'imc', 'wallet', 'is_gold', 'date_gold'
+        'taille', 'poids', 'imc', 'wallet', 'is_gold', 'date_gold', 'objectif'
     ];
 
     protected $useTimestamps  = false;
