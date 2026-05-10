@@ -18,7 +18,7 @@ $routes->post('/login', 'AuthController::loginPost');
 $routes->get('/logout', 'AuthController::logout');
 
 // Routes utilisateur
-$routes->get('user/dashboard', 'Home::index');
+$routes->get('/user/dashboard', 'Home::index');
 
 // Routes admin
 $routes->get('admin/dashboard',                'AdminController::dashboard');
