@@ -25,6 +25,10 @@ $routes->group('', ['filter' => 'userAuth'], static function ($routes) {
 	$routes->get('wallet/test', 'WalletController::test');
 	$routes->get('wallet/solde', 'WalletController::solde');
 	$routes->post('wallet/valider_code', 'WalletController::validerCode');
+
+	// Objectifs utilisateur
+	$routes->match(['get','post'], 'objectif/choisir', 'Objectif::choisir');
+	$routes->get('objectif/suggestions', 'Objectif::suggestions');
 });
 
 // Routes admin

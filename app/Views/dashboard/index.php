@@ -9,11 +9,13 @@
     <main>
         <h1>Tableau de bord</h1>
 
-        <?php /** @var array<string, mixed> $user */ ?>
-        <?php /** @var float $imc */ ?>
-        <?php /** @var string $categorie */ ?>
-        <?php /** @var float|int $progression */ ?>
-        <?php /** @var string $walletLabel */ ?>
+        <?php
+        $user = $user ?? [];
+        $imc = $imc ?? 0;
+        $categorie = $categorie ?? '';
+        $progression = $progression ?? 0;
+        $walletLabel = $walletLabel ?? 'Ar';
+        ?>
 
         <section>
             <h2>Profil</h2>

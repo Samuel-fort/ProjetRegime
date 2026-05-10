@@ -13,4 +13,12 @@ class ActiviteModel extends Model
         'calories_heure', 'objectif', 'actif'
     ];
     protected $useTimestamps = false;
+
+    // Récupère les activités sportives actives correspondant à un objectif
+    public function getActivitesParObjectif(string $objectif): array
+    {
+        return $this->where('objectif', $objectif)
+                    ->where('actif', 1)
+                    ->findAll();
+    }
 }

@@ -1,0 +1,13 @@
+/.vscode/
+/vendor/
+/node_modules/
+
+# Writable folders
+/writable/debugbar/
+/writable/logs/
+/writable/session/
+/writable/cache/
+
+# OS files
+.DS_Store
+Thumbs.db
