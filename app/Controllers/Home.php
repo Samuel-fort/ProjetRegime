@@ -4,7 +4,7 @@ namespace App\Controllers;
 
 class Home extends BaseController
 {
-    public function index(): string
+    public function index()
     {
         // Vérifier que l'utilisateur est connecté
         $session = session();
@@ -12,6 +12,7 @@ class Home extends BaseController
             return redirect()->to(base_url('login'));
         }
 
-        return view('dashboard');
+        // Rediriger l'affichage vers la nouvelle vue structurée du tableau de bord
+        return view('dashboard/index');
     }
 }
