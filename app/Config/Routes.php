@@ -17,6 +17,11 @@ $routes->get('/login',  'AuthController::login');
 $routes->post('/login', 'AuthController::loginPost');
 $routes->get('/logout', 'AuthController::logout');
 
+// Routes utilisateur protégées
+$routes->group('', ['filter' => 'userAuth'], static function ($routes) {
+	$routes->get('user/dashboard', 'Dashboard::index');
+});
+
 // Routes admin
 $routes->get('admin/dashboard',                'AdminController::dashboard');
 $routes->get('admin/regimes',                  'AdminController::regimes');
