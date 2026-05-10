@@ -17,7 +17,7 @@
         <?php if (! empty($errorsList)): ?>
             <div>
                 <ul>
-                    <?php foreach ($errorsList as $error): ?>
+git                     <?php foreach ($errorsList as $error): ?>
                         <?php $error = (string) $error; ?>
                         <li><?= esc($error) ?></li>
                     <?php endforeach; ?>
