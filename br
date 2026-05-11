@@ -1,1 +1,5 @@
 npx sass public/css/style.scss public/css/style.css && npx sass --style=compressed public/css/style.scss public/css/style.min.css
+lien github : https://github.com/Samuel-fort/ProjetRegime.git
+lien sheet suivi : https://docs.google.com/spreadsheets/d/145DnMwBFVmaA-VtrBer8yWRByRtpgx2PFcVdOHgiCVE/edit?usp=sharing
+script sql : app/Database/Migrations/Database.sql
+membre : liste_membre.txt
