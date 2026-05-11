@@ -2,6 +2,7 @@
 <html>
 <head>
     <title>Test fotsny</title>
+    <link rel="stylesheet" href="<?= base_url('css/style.css') ?>">
     <style>
         body {
             font-family: Arial, sans-serif;

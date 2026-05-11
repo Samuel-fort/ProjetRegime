@@ -7,164 +7,69 @@ if (!$session->get('user_id')) {
 $user_nom = $session->get('user_nom');
 $solde_actuel = $user_solde ?? 0; // Va être défini par le contrôleur
 ?>
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Mon Portefeuille</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 20px;
-            background-color: #f0f0f0;
-        }
+<?php echo view('layout/header'); ?>
 
-        .container {
-            max-width: 600px;
-            margin: 0 auto;
-            background-color: white;
-            padding: 20px;
-            border: 1px solid #ccc;
-        }
+<div class="container-lg py-5">
+    <div class="row justify-content-center">
+        <div class="col-lg-8">
+            <div class="mb-4">
+                <a href="<?= base_url('dashboard') ?>" class="btn btn-secondary btn-sm">← Retour au dashboard</a>
+            </div>
 
-        h3 {
-            text-align: center;
-            color: #333;
-        }
+            <h1 class="mb-4">Mon Portefeuille</h1>
+            <p class="lead">Bienvenue, <strong><?= htmlspecialchars($user_nom) ?></strong></p>
 
-        h5 {
-            color: #555;
-            margin-top: 15px;
-        }
+            <!-- Solde Card -->
+            <div class="card mb-4 border-primary">
+                <div class="card-body">
+                    <h5 class="card-title">Solde actuel</h5>
+                    <p class="card-text text-success" style="font-size: 28px; font-weight: bold;">
+                        <span id="solde"><?= number_format($solde_actuel, 2, ',', '') ?></span> €
+                    </p>
+                </div>
+            </div>
 
-        label {
-            display: block;
-            margin-bottom: 5px;
-        }
+            <!-- Codes disponibles -->
+            <div class="card mb-4">
+                <div class="card-body">
+                    <h5 class="card-title">Codes disponibles</h5>
+                    <p class="card-text">
+                        BIENV-A1B2C3 (10€)<br>
+                        PROMO-G7H8I9 (20€)<br>
+                        SUPER-M4N5O6 (50€)<br>
+                        GOLD-Y7Z8A1B (30€)<br>
+                        VIP-E5F6G7H8 (100€)
+                    </p>
+                </div>
+            </div>
 
-        input {
-            width: 100%;
-            padding: 10px;
-            border: 1px solid #ddd;
-            margin-bottom: 10px;
-            box-sizing: border-box;
-        }
+            <!-- Valider code -->
+            <div class="card mb-4">
+                <div class="card-body">
+                    <h5 class="card-title">Valider un code</h5>
+                    <div class="mb-3">
+                        <label for="code_input" class="form-label">Code de validation :</label>
+                        <input type="text" class="form-control" id="code_input" placeholder="Ex: BIENV-A1B2C3">
+                    </div>
+                    <button id="btn_valider" class="btn btn-primary w-100">Valider le code</button>
+                    <div id="message" class="mt-3"></div>
+                </div>
+            </div>
 
-        button {
-            width: 100%;
-            padding: 10px;
-            background-color: #007bff;
-            color: white;
-            border: none;
-            cursor: pointer;
-            font-size: 16px;
-        }
-
-        button:hover {
-            background-color: #0056b3;
-        }
-
-        #solde {
-            font-size: 24px;
-            font-weight: bold;
-            color: green;
-        }
-
-        #message {
-            padding: 10px;
-            margin-top: 15px;
-            border: 1px solid #ddd;
-        }
-
-        .success {
-            background-color: #d4edda;
-            color: #155724;
-            border-color: #c3e6cb;
-        }
-
-        .error {
-            background-color: #f8d7da;
-            color: #721c24;
-            border-color: #f5c6cb;
-        }
-
-        #transactions {
-            border: 1px solid #ddd;
-            padding: 10px;
-            height: 200px;
-            overflow-y: auto;
-            margin-top: 10px;
-            background-color: #f9f9f9;
-        }
-
-        .transaction {
-            padding: 8px;
-            border-bottom: 1px solid #eee;
-            font-size: 14px;
-        }
-
-        hr {
-            margin: 20px 0;
-            border: none;
-            border-top: 1px solid #ddd;
-        }
-
-        .nav-back {
-            margin-bottom: 20px;
-        }
-
-        .nav-back a {
-            color: #007bff;
-            text-decoration: none;
-        }
-
-        .nav-back a:hover {
-            text-decoration: underline;
-        }
-    </style>
-</head>
-<body>
-<div class="container">
-    <div class="nav-back">
-        <a href="<?= base_url('user/dashboard') ?>">Retour au dashboard</a>
-    </div>
-
-    <h3>Mon Portefeuille</h3>
-    <p>Bienvenue, <?= htmlspecialchars($user_nom) ?></p>
-
-    <div>
-        <h5>Solde actuel</h5>
-        <p>Solde: <span id="solde"><?= number_format($solde_actuel, 2, ',', '') ?></span> €</p>
-    </div>
-
-    <div>
-        <h5>Codes disponibles</h5>
-        <p style="font-size: 14px;">
-            BIENV-A1B2C3 (10€)<br>
-            PROMO-G7H8I9 (20€)<br>
-            SUPER-M4N5O6 (50€)<br>
-            GOLD-Y7Z8A1B (30€)<br>
-            VIP-E5F6G7H8 (100€)
-        </p>
-    </div>
-
-    <hr>
-
-    <div>
-        <label for="code_input">Valider un code :</label>
-        <input type="text" id="code_input" placeholder="Ex: BIENV-A1B2C3">
-    </div>
-
-    <button id="btn_valider">Valider le code</button>
-
-    <div id="message"></div>
-
-    <hr>
-
-    <h5>Historique des transactions</h5>
-    <div id="transactions">
-        <p style="color: #999; font-size: 14px;">Aucune transaction</p>
+            <!-- Historique des transactions -->
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Historique des transactions</h5>
+                    <div id="transactions" class="border rounded p-3" style="height: 250px; overflow-y: auto; background-color: #f8f9fa;">
+                        <p class="text-muted small">Aucune transaction</p>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
+
+<?php echo view('layout/footer'); ?>
 
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
@@ -209,11 +114,11 @@ $(document).ready(function() {
     });
     
     function afficherSucces(message) {
-        $('#message').html('<div class="success">' + message + '</div>');
+        $('#message').html('<div class="alert alert-success alert-dismissible fade show" role="alert">' + message + '<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button></div>');
     }
     
     function afficherErreur(message) {
-        $('#message').html('<div class="error">' + message + '</div>');
+        $('#message').html('<div class="alert alert-danger alert-dismissible fade show" role="alert">' + message + '<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button></div>');
     }
     
     function chargerSolde() {
@@ -231,10 +136,13 @@ $(document).ready(function() {
     
     function ajouterTransaction(montant, code) {
         let date = new Date().toLocaleString('fr-FR');
-        let html = '<div class="transaction">Credit: + ' + montant.toFixed(2) + '€ - Code: ' + code + ' - ' + date + '</div>';
-        $('#transactions').prepend(html);
+        let html = '<div class="px-2 py-2 border-bottom small"><strong>+ ' + montant.toFixed(2) + ' €</strong> - Code: <code>' + code + '</code> - ' + date + '</div>';
+        
+        let transDiv = $('#transactions');
+        if (transDiv.find('.text-muted').length > 0) {
+            transDiv.empty();
+        }
+        transDiv.prepend(html);
     }
 });
 </script>
-</body>
-</html>

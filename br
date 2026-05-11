@@ -1,0 +1,1 @@
+npx sass public/css/style.scss public/css/style.css && npx sass --style=compressed public/css/style.scss public/css/style.min.css

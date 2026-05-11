@@ -1,55 +1,65 @@
-<!DOCTYPE html>
-<html lang="fr">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tableau de bord utilisateur</title>
-</head>
-<body>
-    <main>
-        <h1>Tableau de bord</h1>
+<?php echo view('layout/header'); ?>
+<div class="container-lg py-5">
+    <?php
+    $user = $user ?? [];
+    $imc = $imc ?? 0;
+    $categorie = $categorie ?? '';
+    $progression = $progression ?? 0;
+    $walletLabel = $walletLabel ?? 'Ar';
+    ?>
 
-        <?php
-        $user = $user ?? [];
-        $imc = $imc ?? 0;
-        $categorie = $categorie ?? '';
-        $progression = $progression ?? 0;
-        $walletLabel = $walletLabel ?? 'Ar';
-        ?>
+    <h1 class="mb-4">Bienvenue, <?= esc($user['nom'] ?? '') ?></h1>
 
-        <section>
-            <h2>Profil</h2>
-            <p><strong>Nom :</strong> <?= esc((string) ($user['nom'] ?? '')) ?></p>
-            <p><strong>Email :</strong> <?= esc((string) ($user['email'] ?? '')) ?></p>
-            <p><strong>Genre :</strong> <?= esc((string) ($user['genre'] ?? '')) ?></p>
-            <p><strong>Taille :</strong> <?= esc((string) ($user['taille'] ?? '')) ?> cm</p>
-            <p><strong>Poids :</strong> <?= esc((string) ($user['poids'] ?? '')) ?> kg</p>
-        </section>
-
-        <section>
-            <h2>IMC</h2>
-            <p><strong>Valeur :</strong> <?= number_format((float) $imc, 2, ',', ' ') ?></p>
-            <p><strong>Interprétation :</strong> <?= esc($categorie) ?></p>
-            <div style="border:1px solid #000; width:100%; max-width:320px; height:18px;">
-                <div style="width:<?= esc((string) $progression) ?>%; height:18px; background:#000;"></div>
+    <div class="row">
+        <div class="col-md-6 mb-4">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Profil</h5>
+                    <p><strong>Nom :</strong> <?= esc((string) ($user['nom'] ?? '')) ?></p>
+                    <p><strong>Email :</strong> <?= esc((string) ($user['email'] ?? '')) ?></p>
+                    <p><strong>Genre :</strong> <?= esc((string) ($user['genre'] ?? '')) ?></p>
+                    <p class="mb-0"><strong>Taille :</strong> <?= esc((string) ($user['taille'] ?? '')) ?> cm</p>
+                </div>
             </div>
-        </section>
+        </div>
 
-        <section>
-            <h2>Wallet</h2>
-            <p><strong>Solde :</strong> <?= esc(number_format((float) ($user['wallet'] ?? 0), 2, ',', ' ')) ?> <?= esc($walletLabel) ?></p>
-        </section>
+        <div class="col-md-6 mb-4">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">IMC</h5>
+                    <p><strong>Valeur :</strong> <?= number_format((float) $imc, 2, ',', ' ') ?></p>
+                    <p><strong>Catégorie :</strong> <?= esc($categorie) ?></p>
+                    <div class="progress">
+                        <div class="progress-bar" style="width:<?= esc((string) $progression) ?>%"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
 
-        <section>
-            <h2>Statut</h2>
-            <p><?= ! empty($user['is_gold']) ? 'Membre Gold ✓' : 'Standard' ?></p>
-        </section>
+        <div class="col-md-6 mb-4">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Portefeuille</h5>
+                    <p class="display-6 text-primary mb-0"><?= esc(number_format((float) ($user['wallet'] ?? 0), 2, ',', ' ')) ?> <?= esc($walletLabel) ?></p>
+                </div>
+            </div>
+        </div>
 
-        <nav>
-            <a href="<?= base_url('profil/modifier') ?>">Modifier le profil</a><br>
-            <a href="<?= base_url('objectif/choisir') ?>">Choisir un objectif</a><br>
-            <a href="<?= base_url('wallet') ?>">Wallet</a>
-        </nav>
-    </main>
-</body>
-</html>
+        <div class="col-md-6 mb-4">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Statut</h5>
+                    <p><span class="badge bg-<?= ! empty($user['is_gold']) ? 'warning' : 'secondary' ?>"><?= ! empty($user['is_gold']) ? 'Membre Gold ✓' : 'Standard' ?></span></p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="mt-5">
+        <h4 class="mb-3">Actions rapides</h4>
+        <a href="<?= base_url('profil/modifier') ?>" class="btn btn-outline-primary me-2 mb-2">Modifier le profil</a>
+        <a href="<?= base_url('objectif/choisir') ?>" class="btn btn-outline-primary me-2 mb-2">Choisir un objectif</a>
+        <a href="<?= base_url('wallet') ?>" class="btn btn-outline-primary mb-2">Gérer portefeuille</a>
+    </div>
+</div>
+<?php echo view('layout/footer'); ?>

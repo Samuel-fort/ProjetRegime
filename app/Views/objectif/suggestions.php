@@ -1,57 +1,56 @@
-<!DOCTYPE html>
-<html lang="fr">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Suggestions selon objectif</title>
-</head>
-<body>
-    <main>
-        <?php
-        $objectif = $objectif ?? '';
-        $regimes = $regimes ?? [];
-        $activites = $activites ?? [];
-        ?>
+<?php echo view('layout/header'); ?>
+<div class="container-lg py-5">
+    <?php
+    $objectif = $objectif ?? '';
+    $regimes = $regimes ?? [];
+    $activites = $activites ?? [];
+    ?>
 
-        <h1>Suggestions pour "<?= esc((string) $objectif) ?>"</h1>
-        <p><a href="<?= base_url('objectif/suggestions/pdf') ?>" target="_blank">Exporter les suggestions en PDF</a></p>
+    <h1 class="mb-4">Suggestions pour "<?= esc((string) $objectif) ?>"</h1>
+    <p class="mb-4"><a href="<?= base_url('objectif/suggestions/pdf') ?>" target="_blank" class="btn btn-sm btn-outline-secondary">Exporter en PDF</a></p>
 
-        <section>
-            <h2>Régimes suggérés</h2>
-            <?php if (empty($regimes)): ?>
-                <p>Aucun régime trouvé pour cet objectif.</p>
-            <?php else: ?>
-                <?php foreach ($regimes as $r): ?>
-                    <article>
-                        <h3><?= esc((string) ($r['nom'] ?? '')) ?></h3>
-                        <p><?= esc((string) ($r['description'] ?? '')) ?></p>
-                        <p>Prix à partir de : <?= isset($r['prix_min']) ? number_format((float) $r['prix_min'], 2, ',', ' ') : 'N/A' ?> €</p>
-                        <p>Variation de poids : <?= esc((string) ($r['variation_poids'] ?? '')) ?> kg</p>
-                        <p>% viande: <?= esc((string) ($r['pct_viande'] ?? '')) ?> • % poisson: <?= esc((string) ($r['pct_poisson'] ?? '')) ?> • % volaille: <?= esc((string) ($r['pct_volaille'] ?? '')) ?></p>
-                        <p><a href="#">Voir le détail</a></p>
-                    </article>
-                    <hr>
-                <?php endforeach; ?>
-            <?php endif; ?>
-        </section>
+    <h2 class="mt-5 mb-4">Régimes suggérés</h2>
+    <?php if (empty($regimes)): ?>
+        <div class="alert alert-info">Aucun régime trouvé pour cet objectif.</div>
+    <?php else: ?>
+        <div class="row">
+            <?php foreach ($regimes as $r): ?>
+                <div class="col-md-6 mb-4">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title"><?= esc((string) ($r['nom'] ?? '')) ?></h5>
+                            <p class="card-text"><?= esc((string) ($r['description'] ?? '')) ?></p>
+                            <p class="mb-2"><strong>Prix :</strong> <?= isset($r['prix_min']) ? number_format((float) $r['prix_min'], 2, ',', ' ') : 'N/A' ?> €</p>
+                            <p class="mb-2"><strong>Variation :</strong> <?= esc((string) ($r['variation_poids'] ?? '')) ?> kg</p>
+                            <p class="text-muted small">Viande: <?= esc((string) ($r['pct_viande'] ?? '')) ?> • Poisson: <?= esc((string) ($r['pct_poisson'] ?? '')) ?> • Volaille: <?= esc((string) ($r['pct_volaille'] ?? '')) ?></p>
+                        </div>
+                    </div>
+                </div>
+            <?php endforeach; ?>
+        </div>
+    <?php endif; ?>
 
-        <section>
-            <h2>Activités sportives suggérées</h2>
-            <?php if (empty($activites)): ?>
-                <p>Aucune activité trouvée pour cet objectif.</p>
-            <?php else: ?>
-                <ul>
-                    <?php foreach ($activites as $a): ?>
-                        <li>
-                            <strong><?= esc((string) ($a['nom'] ?? '')) ?></strong> — <?= esc((string) ($a['description'] ?? '')) ?>
-                            (<?= esc((string) ($a['duree_minutes'] ?? '')) ?> min, <?= esc((string) ($a['calories_heure'] ?? '')) ?> kcal/h)
-                        </li>
-                    <?php endforeach; ?>
-                </ul>
-            <?php endif; ?>
-        </section>
+    <h2 class="mt-5 mb-4">Activités sportives suggérées</h2>
+    <?php if (empty($activites)): ?>
+        <div class="alert alert-info">Aucune activité trouvée pour cet objectif.</div>
+    <?php else: ?>
+        <div class="row">
+            <?php foreach ($activites as $a): ?>
+                <div class="col-md-6 mb-3">
+                    <div class="card">
+                        <div class="card-body">
+                            <h6 class="card-title"><?= esc((string) ($a['nom'] ?? '')) ?></h6>
+                            <p class="card-text small"><?= esc((string) ($a['description'] ?? '')) ?></p>
+                            <p class="text-muted small mb-0"><?= esc((string) ($a['duree_minutes'] ?? '')) ?> min • <?= esc((string) ($a['calories_heure'] ?? '')) ?> kcal/h</p>
+                        </div>
+                    </div>
+                </div>
+            <?php endforeach; ?>
+        </div>
+    <?php endif; ?>
 
-        <p><a href="<?= base_url('user/dashboard') ?>">Retour au dashboard</a></p>
-    </main>
-</body>
-</html>
+    <div class="mt-5">
+        <a href="<?= base_url('dashboard') ?>" class="btn btn-secondary">Retour au dashboard</a>
+    </div>
+</div>
+<?php echo view('layout/footer'); ?>

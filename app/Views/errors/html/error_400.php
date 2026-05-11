@@ -3,6 +3,7 @@
 <head>
     <meta charset="utf-8">
     <title><?= lang('Errors.badRequest') ?></title>
+    <link rel="stylesheet" href="<?= base_url('css/style.css') ?>">
 
     <style>
         div.logo {

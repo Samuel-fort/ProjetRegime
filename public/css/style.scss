@@ -1,0 +1,498 @@
+// ─── Variables ────────────────────────────────────────────────────────────────
+
+$primary:          #4A9FD4;
+$primary-dark:     #2F7DB0;
+$primary-light:    #E8F4FC;
+$primary-gradient: linear-gradient(135deg, #4A9FD4 0%, #6DB8E8 100%);
+
+$text-dark:   #1a2a3a;
+$text-gray:   #525252;
+$text-light:  #8B8B8B;
+$border:      #E8E8E8;
+$bg:          #FAFBFC;
+$white:       #FFFFFF;
+
+$success: #10B981;
+$danger:  #EF4444;
+$warning: #F59E0B;
+
+$xs:   0.25rem;
+$sm:   0.5rem;
+$md:   1rem;
+$lg:   1.5rem;
+$xl:   2rem;
+$xxl:  3rem;
+$xxxl: 4rem;
+
+$font:      -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", sans-serif;
+$font-mono: "SF Mono", Monaco, "Cascadia Code", "Roboto Mono", Consolas, monospace;
+$ease:      cubic-bezier(0.4, 0, 0.2, 1);
+
+
+// ─── Mixins ───────────────────────────────────────────────────────────────────
+
+@mixin sm  { @media (max-width: 640px)  { @content; } }
+@mixin md  { @media (max-width: 768px)  { @content; } }
+@mixin lg  { @media (max-width: 1024px) { @content; } }
+
+@mixin flex-center   { display: flex; justify-content: center; align-items: center; }
+@mixin flex-between  { display: flex; justify-content: space-between; align-items: center; }
+
+@mixin shadow($l: md) {
+  box-shadow: if($l == sm, 0 1px 2px rgba(0,0,0,.05),
+              if($l == lg, 0 12px 24px rgba(0,0,0,.12),
+                           0 4px 12px rgba(0,0,0,.08)));
+}
+
+
+// ─── Reset ────────────────────────────────────────────────────────────────────
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: $font;
+  font-size: 16px;
+  line-height: 1.6;
+  color: $text-dark;
+  background: $bg;
+  -webkit-font-smoothing: antialiased;
+}
+
+
+// ─── Typographie ──────────────────────────────────────────────────────────────
+
+h1, h2, h3, h4, h5, h6 {
+  font-weight: 700;
+  line-height: 1.2;
+  color: $text-dark;
+  margin-bottom: $lg;
+}
+
+h1 { font-size: 3rem;   @include md { font-size: 2.2rem; } }
+h2 { font-size: 2.2rem; @include md { font-size: 1.8rem; } }
+h3 { font-size: 1.8rem; }
+h4 { font-size: 1.4rem; }
+h5 { font-size: 1.1rem; }
+h6 { font-size: 1rem; }
+
+p      { margin-bottom: $md; color: $text-gray; line-height: 1.7; }
+strong { font-weight: 700; color: $text-dark; }
+em     { font-style: italic; }
+
+a {
+  color: $primary;
+  text-decoration: none;
+  transition: color 0.2s $ease;
+  &:hover { color: $primary-dark; }
+}
+
+
+// ─── Header ───────────────────────────────────────────────────────────────────
+
+header {
+  background: $white;
+  border-bottom: 1px solid $border;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  @include shadow(sm);
+}
+
+.header-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: $md $xl;
+  @include flex-between;
+  @include md { padding: $md; }
+}
+
+.logo {
+  font-size: 1.5rem;
+  font-weight: 700;
+  background: $primary-gradient;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.nav-main {
+  display: flex;
+  gap: 3rem;
+  @include md { display: none; }
+
+  a {
+    font-size: 0.95rem;
+    font-weight: 500;
+    color: $text-gray;
+    position: relative;
+
+    &::after {
+      content: '';
+      position: absolute;
+      bottom: -4px;
+      left: 0;
+      width: 0;
+      height: 2px;
+      background: $primary;
+      transition: width 0.3s $ease;
+    }
+
+    &:hover {
+      color: $primary;
+      &::after { width: 100%; }
+    }
+  }
+}
+
+.header-actions {
+  display: flex;
+  align-items: center;
+  gap: $lg;
+
+  span { font-size: 0.9rem; color: $text-light; }
+}
+
+
+// ─── Boutons ──────────────────────────────────────────────────────────────────
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: $sm;
+  padding: 0.75rem $lg;
+  font-family: $font;
+  font-size: 0.95rem;
+  font-weight: 600;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  text-decoration: none;
+  transition: all 0.2s $ease;
+
+  &:disabled { opacity: 0.5; cursor: not-allowed; }
+}
+
+.btn-primary {
+  background: $primary-gradient;
+  color: white;
+  &:hover { transform: translateY(-2px); @include shadow(lg); }
+}
+
+.btn-secondary {
+  background: $bg;
+  color: $text-dark;
+  border: 1.5px solid $border;
+  &:hover { background: #F5F5F5; border-color: $primary; }
+}
+
+.btn-outline {
+  background: transparent;
+  color: $primary;
+  border: 2px solid $primary;
+  &:hover { background: $primary-light; }
+}
+
+.btn-danger { background: $danger; color: white; &:hover { opacity: 0.9; } }
+.btn-sm     { padding: 0.5rem $md; font-size: 0.85rem; }
+.btn-lg     { padding: $md $xl; font-size: 1rem; }
+.btn-full   { width: 100%; }
+
+
+// ─── Formulaires ──────────────────────────────────────────────────────────────
+
+.form-group { margin-bottom: $lg; }
+
+label {
+  display: block;
+  margin-bottom: $sm;
+  font-weight: 600;
+  font-size: 0.9rem;
+  color: $text-dark;
+}
+
+%input-base {
+  width: 100%;
+  padding: 0.75rem;
+  font-family: $font;
+  font-size: 0.95rem;
+  border: 1.5px solid $border;
+  border-radius: 8px;
+  background: $white;
+  color: $text-dark;
+  transition: all 0.2s $ease;
+
+  &::placeholder { color: $text-light; }
+
+  &:focus {
+    outline: none;
+    border-color: $primary;
+    box-shadow: 0 0 0 3px rgba($primary, 0.1);
+  }
+}
+
+input[type="text"],
+input[type="email"],
+input[type="password"],
+input[type="number"],
+input[type="tel"],
+input[type="date"],
+textarea,
+select { @extend %input-base; }
+
+textarea { resize: vertical; min-height: 120px; }
+
+.form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: $lg;
+  @include md { grid-template-columns: 1fr; }
+}
+
+.form-check {
+  display: flex;
+  align-items: center;
+  gap: $md;
+  margin-bottom: $md;
+  input  { width: auto; }
+  label  { margin: 0; }
+}
+
+
+// ─── Alertes ──────────────────────────────────────────────────────────────────
+
+.alert {
+  padding: $md $lg;
+  border-radius: 8px;
+  margin-bottom: $lg;
+  border-left: 4px solid;
+  font-size: 0.95rem;
+}
+
+.alert-success { background: #D1FAE5; color: #065F46; border-color: $success; }
+.alert-danger  { background: #FEE2E2; color: #7F1D1D; border-color: $danger; }
+.alert-warning { background: #FEF3C7; color: #78350F; border-color: $warning; }
+
+
+// ─── Cartes ───────────────────────────────────────────────────────────────────
+
+.card {
+  background: $white;
+  border-radius: 12px;
+  overflow: hidden;
+  transition: all 0.3s $ease;
+  @include shadow;
+
+  &:hover { @include shadow(lg); transform: translateY(-4px); }
+}
+
+.card-header {
+  height: 200px;
+  overflow: hidden;
+  background: linear-gradient(135deg, #F5F7FA, #EFF2F5);
+
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.3s $ease;
+  }
+
+  &:hover img { transform: scale(1.08); }
+}
+
+.card-body  { padding: $lg; }
+.card-title { font-size: 1.2rem; font-weight: 700; margin-bottom: $sm; color: $text-dark; }
+.card-text  { font-size: 0.9rem; color: $text-gray; line-height: 1.6; }
+
+
+// ─── Grille ───────────────────────────────────────────────────────────────────
+
+.grid   { display: grid; gap: $lg; }
+
+.grid-2 {
+  grid-template-columns: repeat(2, 1fr);
+  @include md { grid-template-columns: 1fr; }
+}
+
+.grid-3 {
+  grid-template-columns: repeat(3, 1fr);
+  @include lg { grid-template-columns: repeat(2, 1fr); }
+  @include md { grid-template-columns: 1fr; }
+}
+
+
+// ─── Layout ───────────────────────────────────────────────────────────────────
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 $xl;
+  @include md { padding: 0 $md; }
+}
+
+section {
+  padding: $xxxl $xl;
+  @include md { padding: $xxl $lg; }
+}
+
+.section-title {
+  text-align: center;
+  margin-bottom: $xxl;
+
+  h2 { margin-bottom: $md; }
+  p  { color: $text-light; font-size: 1.05rem; }
+}
+
+
+// ─── Footer ───────────────────────────────────────────────────────────────────
+
+footer {
+  background: linear-gradient(135deg, #2A3F5F, #1E3049);
+  color: white;
+  padding: $xxl $xl $md;
+  margin-top: $xxxl;
+}
+
+.footer-container { max-width: 1200px; margin: 0 auto; }
+
+.footer-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: $xl;
+  margin-bottom: $xl;
+  @include md { grid-template-columns: repeat(2, 1fr); gap: $lg; }
+}
+
+.footer-section {
+  h4 { font-size: 1rem; margin-bottom: $md; color: white; }
+
+  a {
+    display: block;
+    font-size: 0.9rem;
+    color: rgba(white, 0.7);
+    margin-bottom: $sm;
+    transition: color 0.2s $ease;
+    &:hover { color: white; }
+  }
+}
+
+.footer-bottom {
+  border-top: 1px solid rgba(white, 0.1);
+  padding-top: $lg;
+  text-align: center;
+  font-size: 0.85rem;
+  color: rgba(white, 0.6);
+}
+
+.footer-mentions {
+  margin-top: $sm;
+  font-weight: 600;
+  color: rgba(white, 0.8);
+}
+
+
+// ─── Dashboard ────────────────────────────────────────────────────────────────
+
+main { padding: $xl; }
+
+.dashboard-section {
+  background: $white;
+  border-radius: 12px;
+  padding: $lg;
+  margin-bottom: $lg;
+  @include shadow(sm);
+
+  h2 {
+    padding-bottom: $md;
+    border-bottom: 2px solid $primary-light;
+    margin-bottom: $lg;
+  }
+}
+
+.profile-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: $md;
+  @include md { grid-template-columns: 1fr; }
+
+  p {
+    margin-bottom: $sm;
+    strong { color: $primary; }
+  }
+}
+
+.wallet-box {
+  background: $primary-gradient;
+  border-radius: 12px;
+  padding: $xl;
+  color: white;
+  text-align: center;
+
+  .wallet-label  { font-size: 0.9rem; opacity: 0.9; margin-bottom: $sm; }
+  .wallet-amount { font-size: 3rem; font-weight: 700; }
+}
+
+.gold-badge {
+  display: inline-block;
+  background: linear-gradient(135deg, #FFD700, #FFA500);
+  color: #333;
+  padding: $sm $md;
+  border-radius: 999px;
+  font-weight: 600;
+  font-size: 0.85rem;
+}
+
+
+// ─── Navigation ───────────────────────────────────────────────────────────────
+
+nav {
+  display: flex;
+  gap: $md;
+  flex-wrap: wrap;
+  margin: $xl 0;
+
+  a {
+    padding: $sm $md;
+    border-radius: 8px;
+    font-weight: 500;
+    font-size: 0.95rem;
+    transition: all 0.2s $ease;
+    &:hover { background: $primary-light; text-decoration: none; }
+  }
+}
+
+
+// ─── Utilitaires ──────────────────────────────────────────────────────────────
+
+.text-center   { text-align: center; }
+.text-primary  { color: $primary; }
+.text-muted    { color: $text-light; }
+
+.mb-0 { margin-bottom: 0; }
+.mb-1 { margin-bottom: $sm; }
+.mb-2 { margin-bottom: $md; }
+.mb-3 { margin-bottom: $lg; }
+.mt-1 { margin-top: $sm; }
+.mt-2 { margin-top: $md; }
+.mt-3 { margin-top: $lg; }
+
+.flex         { display: flex; }
+.flex-center  { @include flex-center; }
+.flex-between { @include flex-between; }
+.gap-2        { gap: $md; }
+.gap-3        { gap: $lg; }
+.hidden       { display: none !important; }
+
+
+// ─── Animations ───────────────────────────────────────────────────────────────
+
+@keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+@keyframes slide  { from { opacity: 0; transform: translateX(-20px); } to { opacity: 1; transform: translateX(0); } }
+@keyframes pulse  { 0%, 100% { opacity: 1; } 50% { opacity: 0.7; } }
+
+.animate-fade  { animation: fadeIn 0.4s $ease; }
+.animate-slide { animation: slide 0.4s $ease; }
+.animate-pulse { animation: pulse 2s $ease infinite; }

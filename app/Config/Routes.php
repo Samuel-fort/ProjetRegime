@@ -19,6 +19,7 @@ $routes->get('/logout', 'AuthController::logout');
 
 // Routes utilisateur protégées
 $routes->group('', ['filter' => 'userAuth'], static function ($routes) {
+	$routes->get('dashboard', 'Dashboard::index');
 	$routes->get('user/dashboard', 'Dashboard::index');
 	$routes->match(['get', 'post'], 'profil/modifier', 'Profil::modifier');
 	$routes->get('wallet', 'WalletController::index');

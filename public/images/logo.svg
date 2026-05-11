@@ -1,0 +1,48 @@
+<svg width="100%" viewBox="0 0 680 320" role="img" xmlns="http://www.w3.org/2000/svg" style="">
+  <title style="fill:rgb(0, 0, 0);stroke:none;color:rgb(0, 0, 0);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Anthropic Sans&quot;, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif;font-size:16px;font-weight:400;text-anchor:start;dominant-baseline:auto">Logo VIA cyan</title>
+  <desc style="fill:rgb(0, 0, 0);stroke:none;color:rgb(0, 0, 0);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Anthropic Sans&quot;, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif;font-size:16px;font-weight:400;text-anchor:start;dominant-baseline:auto">Logo pour le trinôme VIA : un biceps stylisé en bleu cyan avec les initiales VIA</desc>
+
+  <defs>
+    <linearGradient id="cyanGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#00BCD4"/>
+      <stop offset="100%" style="stop-color:#4DD0E1"/>
+    </linearGradient>
+    <linearGradient id="armGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#00BCD4"/>
+      <stop offset="100%" style="stop-color:#0097A7"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Cercle fond doux -->
+  <circle cx="240" cy="155" r="120" fill="#E0F7FA" opacity="0.6" style="fill:rgb(224, 247, 250);stroke:none;color:rgb(0, 0, 0);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:0.6;font-family:&quot;Anthropic Sans&quot;, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif;font-size:16px;font-weight:400;text-anchor:start;dominant-baseline:auto"/>
+
+  <!-- Bras / avant-bras -->
+  <path d="M150 220 Q145 200 160 185 Q175 170 200 168 L260 165 Q275 163 280 170 Q285 178 278 185 L220 188 Q205 190 198 198 Q190 210 192 225 Q194 238 185 242 Q172 245 162 238 Q152 232 150 220Z" fill="url(#armGrad)" stroke="none" style="stroke:none;color:rgb(0, 0, 0);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Anthropic Sans&quot;, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif;font-size:16px;font-weight:400;text-anchor:start;dominant-baseline:auto"/>
+
+  <!-- Biceps gonflé -->
+  <path d="M200 168 Q195 140 205 118 Q218 90 245 82 Q272 74 290 92 Q310 112 305 140 Q300 162 280 170 L260 165 Z" fill="url(#armGrad)" stroke="none" style="stroke:none;color:rgb(0, 0, 0);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Anthropic Sans&quot;, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif;font-size:16px;font-weight:400;text-anchor:start;dominant-baseline:auto"/>
+
+  <!-- Pointe du biceps (bosse) -->
+  <ellipse cx="252" cy="108" rx="32" ry="22" fill="#00BCD4" opacity="0.3" style="fill:rgb(0, 188, 212);stroke:none;color:rgb(0, 0, 0);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:0.3;font-family:&quot;Anthropic Sans&quot;, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif;font-size:16px;font-weight:400;text-anchor:start;dominant-baseline:auto"/>
+
+  <!-- Poing -->
+  <rect x="275" y="175" width="52" height="38" rx="10" fill="url(#armGrad)" style="stroke:none;color:rgb(0, 0, 0);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Anthropic Sans&quot;, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif;font-size:16px;font-weight:400;text-anchor:start;dominant-baseline:auto"/>
+  <rect x="278" y="168" width="12" height="14" rx="4" fill="#0097A7" style="fill:rgb(0, 151, 167);stroke:none;color:rgb(0, 0, 0);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Anthropic Sans&quot;, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif;font-size:16px;font-weight:400;text-anchor:start;dominant-baseline:auto"/>
+  <rect x="294" y="166" width="12" height="16" rx="4" fill="#0097A7" style="fill:rgb(0, 151, 167);stroke:none;color:rgb(0, 0, 0);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Anthropic Sans&quot;, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif;font-size:16px;font-weight:400;text-anchor:start;dominant-baseline:auto"/>
+  <rect x="310" y="168" width="11" height="14" rx="4" fill="#0097A7" style="fill:rgb(0, 151, 167);stroke:none;color:rgb(0, 0, 0);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Anthropic Sans&quot;, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif;font-size:16px;font-weight:400;text-anchor:start;dominant-baseline:auto"/>
+
+  <!-- Étoile déco -->
+  <polygon points="340,90 344,102 357,102 347,110 351,122 340,115 329,122 333,110 323,102 336,102" fill="#00BCD4" opacity="0.8" style="fill:rgb(0, 188, 212);stroke:none;color:rgb(0, 0, 0);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:0.8;font-family:&quot;Anthropic Sans&quot;, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif;font-size:16px;font-weight:400;text-anchor:start;dominant-baseline:auto"/>
+
+  <!-- Texte VIA -->
+  <text x="430" y="135" font-family="'Segoe UI', Arial, sans-serif" font-size="88" font-weight="800" fill="url(#cyanGrad)" letter-spacing="-2" style="stroke:none;color:rgb(0, 0, 0);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Segoe UI&quot;, Arial, sans-serif;font-size:88px;font-weight:800;text-anchor:start;dominant-baseline:auto">VIA</text>
+
+  <!-- Sous-titre -->
+  <text x="430" y="168" font-family="'Segoe UI', Arial, sans-serif" font-size="15" font-weight="400" fill="#00BCD4" letter-spacing="5" style="fill:rgb(0, 188, 212);stroke:none;color:rgb(0, 0, 0);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Segoe UI&quot;, Arial, sans-serif;font-size:15px;font-weight:400;text-anchor:start;dominant-baseline:auto">PROJET RÉGIME</text>
+
+  <!-- Ligne déco -->
+  <rect x="430" y="178" width="160" height="3" rx="2" fill="url(#cyanGrad)" style="stroke:none;color:rgb(0, 0, 0);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Anthropic Sans&quot;, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif;font-size:16px;font-weight:400;text-anchor:start;dominant-baseline:auto"/>
+
+  <!-- Mention ETU -->
+  <text x="340" y="285" font-family="'Segoe UI', Arial, sans-serif" font-size="11" font-weight="400" fill="#B0B0B0" text-anchor="middle" letter-spacing="2" style="fill:rgb(176, 176, 176);stroke:none;color:rgb(0, 0, 0);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Segoe UI&quot;, Arial, sans-serif;font-size:11px;font-weight:400;text-anchor:middle;dominant-baseline:auto">ETU  3889 - 4587 - 4096</text>
+</svg>
