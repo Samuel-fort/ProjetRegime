@@ -14,6 +14,7 @@
         ?>
 
         <h1>Suggestions pour "<?= esc((string) $objectif) ?>"</h1>
+        <p><a href="<?= base_url('objectif/suggestions/pdf') ?>" target="_blank">Exporter les suggestions en PDF</a></p>
 
         <section>
             <h2>Régimes suggérés</h2>

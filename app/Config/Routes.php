@@ -29,23 +29,26 @@ $routes->group('', ['filter' => 'userAuth'], static function ($routes) {
 	// Objectifs utilisateur
 	$routes->match(['get','post'], 'objectif/choisir', 'Objectif::choisir');
 	$routes->get('objectif/suggestions', 'Objectif::suggestions');
+	$routes->get('objectif/suggestions/pdf', 'Objectif::exportSuggestionsPdf');
 });
 
-// Routes admin
-$routes->get('admin/dashboard',                'AdminController::dashboard');
-$routes->get('admin/regimes',                  'AdminController::regimes');
-$routes->get('admin/regimes/create',           'AdminController::regimeCreate');
-$routes->post('admin/regimes/store',           'AdminController::regimeStore');
-$routes->get('admin/regimes/edit/(:num)',      'AdminController::regimeEdit/$1');
-$routes->post('admin/regimes/update/(:num)',   'AdminController::regimeUpdate/$1');
-$routes->get('admin/regimes/delete/(:num)',    'AdminController::regimeDelete/$1');
-$routes->get('admin/activites',                'AdminController::activites');
-$routes->get('admin/activites/create',         'AdminController::activiteCreate');
-$routes->post('admin/activites/store',         'AdminController::activiteStore');
-$routes->get('admin/activites/edit/(:num)',    'AdminController::activiteEdit/$1');
-$routes->post('admin/activites/update/(:num)', 'AdminController::activiteUpdate/$1');
-$routes->get('admin/activites/delete/(:num)',  'AdminController::activiteDelete/$1');
-$routes->get('admin/codes',                    'AdminController::codes');
-$routes->get('admin/codes/create',             'AdminController::codeCreate');
-$routes->post('admin/codes/store',             'AdminController::codeStore');
-$routes->get('admin/codes/delete/(:num)',      'AdminController::codeDelete/$1');
+// Routes admin protégées
+$routes->group('admin', ['filter' => 'adminAuth'], static function ($routes) {
+	$routes->get('dashboard',                'AdminController::dashboard');
+	$routes->get('regimes',                  'AdminController::regimes');
+	$routes->get('regimes/create',           'AdminController::regimeCreate');
+	$routes->post('regimes/store',           'AdminController::regimeStore');
+	$routes->get('regimes/edit/(:num)',      'AdminController::regimeEdit/$1');
+	$routes->post('regimes/update/(:num)',   'AdminController::regimeUpdate/$1');
+	$routes->get('regimes/delete/(:num)',    'AdminController::regimeDelete/$1');
+	$routes->get('activites',                'AdminController::activites');
+	$routes->get('activites/create',         'AdminController::activiteCreate');
+	$routes->post('activites/store',         'AdminController::activiteStore');
+	$routes->get('activites/edit/(:num)',    'AdminController::activiteEdit/$1');
+	$routes->post('activites/update/(:num)', 'AdminController::activiteUpdate/$1');
+	$routes->get('activites/delete/(:num)',  'AdminController::activiteDelete/$1');
+	$routes->get('codes',                    'AdminController::codes');
+	$routes->get('codes/create',             'AdminController::codeCreate');
+	$routes->post('codes/store',             'AdminController::codeStore');
+	$routes->get('codes/delete/(:num)',      'AdminController::codeDelete/$1');
+});
