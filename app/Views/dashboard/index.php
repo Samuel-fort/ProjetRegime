@@ -6,6 +6,9 @@
     $categorie = $categorie ?? '';
     $progression = $progression ?? 0;
     $walletLabel = $walletLabel ?? 'Ar';
+    $commandeActuelle = $commandeActuelle ?? null;
+    $dateFinRegime = $dateFinRegime ?? null;
+    $joursRestants = $joursRestants ?? null;
     ?>
 
     <h1 class="mb-4">Bienvenue, <?= esc($user['nom'] ?? '') ?></h1>
@@ -50,6 +53,29 @@
                 <div class="card-body">
                     <h5 class="card-title">Statut</h5>
                     <p><span class="badge bg-<?= ! empty($user['is_gold']) ? 'warning' : 'secondary' ?>"><?= ! empty($user['is_gold']) ? 'Membre Gold ✓' : 'Standard' ?></span></p>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-12 mb-4">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Mon régime actuel</h5>
+                    <?php if (empty($commandeActuelle)): ?>
+                        <p class="mb-0 text-muted">Aucun régime acheté pour le moment.</p>
+                    <?php else: ?>
+                        <p class="mb-1"><strong>Régime :</strong> <?= esc((string) ($commandeActuelle['regime_nom'] ?? '')) ?></p>
+                        <p class="mb-1"><strong>Durée :</strong> <?= esc((string) ($commandeActuelle['duree_jours'] ?? '')) ?> jours</p>
+                        <p class="mb-1"><strong>Date d'achat :</strong> <?= esc((string) ($commandeActuelle['date_achat'] ?? '')) ?></p>
+                        <p class="mb-1"><strong>Date de fin :</strong> <?= $dateFinRegime instanceof DateTimeInterface ? esc($dateFinRegime->format('d/m/Y')) : 'N/A' ?></p>
+                        <p class="mb-0"><strong>État :</strong>
+                            <?php if ((int) ($joursRestants ?? 0) > 0): ?>
+                                <span class="badge bg-success">Actif, <?= esc((string) $joursRestants) ?> jour(s) restant(s)</span>
+                            <?php else: ?>
+                                <span class="badge bg-secondary">Terminé</span>
+                            <?php endif; ?>
+                        </p>
+                    <?php endif; ?>
                 </div>
             </div>
         </div>

@@ -4,9 +4,28 @@
     $objectif = $objectif ?? '';
     $regimes = $regimes ?? [];
     $activites = $activites ?? [];
+        $estGold = (bool) ($estGold ?? false);
+        $tauxRemiseGold = (float) ($tauxRemiseGold ?? 15);
     ?>
 
     <h1 class="mb-4">Suggestions pour "<?= esc((string) $objectif) ?>"</h1>
+        <?php if (session()->getFlashdata('success')): ?>
+            <div class="alert alert-success alert-dismissible fade show" role="alert">
+                <?= esc((string) session()->getFlashdata('success')) ?>
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        <?php endif; ?>
+        <?php if (session()->getFlashdata('error')): ?>
+            <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                <?= esc((string) session()->getFlashdata('error')) ?>
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        <?php endif; ?>
+        <?php if ($estGold): ?>
+            <div class="alert alert-warning">
+                Vous bénéficiez d'une remise gold de <?= esc(number_format($tauxRemiseGold, 0, ',', ' ')) ?>% sur vos achats.
+            </div>
+        <?php endif; ?>
     <p class="mb-4"><a href="<?= base_url('objectif/suggestions/pdf') ?>" target="_blank" class="btn btn-sm btn-outline-secondary">Exporter en PDF</a></p>
 
     <h2 class="mt-5 mb-4">Régimes suggérés</h2>
@@ -20,9 +39,26 @@
                         <div class="card-body">
                             <h5 class="card-title"><?= esc((string) ($r['nom'] ?? '')) ?></h5>
                             <p class="card-text"><?= esc((string) ($r['description'] ?? '')) ?></p>
-                            <p class="mb-2"><strong>Prix :</strong> <?= isset($r['prix_min']) ? number_format((float) $r['prix_min'], 2, ',', ' ') : 'N/A' ?> €</p>
+                            <p class="mb-2"><strong>Prix de départ :</strong> <?= isset($r['prix_min']) ? number_format((float) $r['prix_min'], 2, ',', ' ') : 'N/A' ?> Ar</p>
                             <p class="mb-2"><strong>Variation :</strong> <?= esc((string) ($r['variation_poids'] ?? '')) ?> kg</p>
                             <p class="text-muted small">Viande: <?= esc((string) ($r['pct_viande'] ?? '')) ?> • Poisson: <?= esc((string) ($r['pct_poisson'] ?? '')) ?> • Volaille: <?= esc((string) ($r['pct_volaille'] ?? '')) ?></p>
+
+                            <?php if (! empty($r['offres'])): ?>
+                                <div class="mt-3 d-flex flex-wrap gap-2">
+                                    <?php foreach ($r['offres'] as $offre): ?>
+                                        <form method="post" action="<?= base_url('objectif/acheter/' . (int) ($r['id'] ?? 0)) ?>">
+                                            <?= csrf_field() ?>
+                                            <input type="hidden" name="duree_jours" value="<?= esc((string) ($offre['duree_jours'] ?? '')) ?>">
+                                            <button type="submit" class="btn btn-sm btn-primary">
+                                                Acheter <?= esc((string) ($offre['duree_jours'] ?? '')) ?> j - <?= number_format((float) ($offre['prix_paye'] ?? 0), 2, ',', ' ') ?> Ar
+                                            </button>
+                                        </form>
+                                    <?php endforeach; ?>
+                                </div>
+                                <?php if ($estGold): ?>
+                                    <p class="text-muted small mt-2 mb-0">La remise gold s'applique automatiquement au moment de l'achat.</p>
+                                <?php endif; ?>
+                            <?php endif; ?>
                         </div>
                     </div>
                 </div>

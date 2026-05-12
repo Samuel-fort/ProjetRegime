@@ -6,6 +6,7 @@ use App\Models\RegimeModel;
 use App\Models\RegimePrixModel;
 use App\Models\ActiviteModel;
 use App\Models\CodeWalletModel;
+use App\Models\ParametreModel;
 use CodeIgniter\Controller;
 
 class AdminController extends Controller
@@ -104,6 +105,20 @@ class AdminController extends Controller
     {
         $regimeModel = new RegimeModel();
         $prixModel   = new RegimePrixModel();
+        $regime      = $regimeModel->find($id);
+
+        if (! $regime) {
+            session()->setFlashdata('error', 'Régime introuvable.');
+            return redirect()->to(base_url('admin/regimes'));
+        }
+
+        $prixActuels = [];
+        foreach ($prixModel->where('regime_id', $id)->findAll() as $row) {
+            $prixActuels[(int) $row['duree_jours']] = $row['prix'];
+        }
+
+        $actifPost = $this->request->getPost('actif');
+        $actif = $actifPost !== null ? 1 : (int) ($regime['actif'] ?? 0);
 
         $regimeModel->update($id, [
             'nom'             => $this->request->getPost('nom'),
@@ -113,7 +128,7 @@ class AdminController extends Controller
             'pct_volaille'    => $this->request->getPost('pct_volaille') ?? 0,
             'variation_poids' => $this->request->getPost('variation_poids') ?? 0,
             'objectif'        => $this->request->getPost('objectif'),
-            'actif'           => $this->request->getPost('actif') ? 1 : 0,
+            'actif'           => $actif,
         ]);
 
         // Mettre à jour les prix
@@ -121,10 +136,15 @@ class AdminController extends Controller
             $prix     = $this->request->getPost('prix_' . $duree);
             $existing = $prixModel->where('regime_id', $id)->where('duree_jours', $duree)->first();
 
-            if ($existing) {
-                $prixModel->update($existing['id'], ['prix' => $prix]);
-            } else if (!empty($prix)) {
-                $prixModel->insert(['regime_id' => $id, 'duree_jours' => $duree, 'prix' => $prix]);
+            if ($prix !== null && $prix !== '') {
+                if ($existing) {
+                    $prixModel->update($existing['id'], ['prix' => $prix]);
+                } else {
+                    $prixModel->insert(['regime_id' => $id, 'duree_jours' => $duree, 'prix' => $prix]);
+                }
+            } elseif (! $existing && isset($prixActuels[$duree])) {
+                // Rien à faire si le champ est vide: on garde le prix actuel en base.
+                continue;
             }
         }
 
@@ -244,5 +264,35 @@ class AdminController extends Controller
         (new CodeWalletModel())->delete($id);
         session()->setFlashdata('success', 'Code supprimé.');
         return redirect()->to(base_url('admin/codes'));
+    }
+
+    // ─── PARAMÈTRES GLOBAUX ─────────────────────────────────
+    public function parametres()
+    {
+        $model = new ParametreModel();
+
+        return view('admin/parametres/index', [
+            'prix_gold' => $model->getValeur('prix_gold', '90000'),
+            'taux_remise_gold' => $model->getValeur('taux_remise_gold', '15'),
+        ]);
+    }
+
+    public function parametreUpdate()
+    {
+        $model = new ParametreModel();
+
+        $prixGold = trim((string) $this->request->getPost('prix_gold'));
+        $tauxRemiseGold = trim((string) $this->request->getPost('taux_remise_gold'));
+
+        if ($prixGold === '' || ! is_numeric($prixGold) || $tauxRemiseGold === '' || ! is_numeric($tauxRemiseGold)) {
+            session()->setFlashdata('error', 'Les valeurs des paramètres doivent être numériques.');
+            return redirect()->to(base_url('admin/parametres'));
+        }
+
+        $model->save(['cle' => 'prix_gold', 'valeur' => (string) $prixGold]);
+        $model->save(['cle' => 'taux_remise_gold', 'valeur' => (string) $tauxRemiseGold]);
+
+        session()->setFlashdata('success', 'Paramètres mis à jour avec succès.');
+        return redirect()->to(base_url('admin/parametres'));
     }
 }

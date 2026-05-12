@@ -17,36 +17,50 @@ class WalletController extends Controller
         }
 
         $code = $this->request->getPost('code');
-        
-        // Vérifier le code dans la table codes_wallet
+        // Traitement atomique pour éviter les réutilisations concurrentes
         $db = \Config\Database::connect();
-        $codeData = $db->table('codes_wallet')
+
+        // Démarrer une transaction
+        $db->transStart();
+
+        // Lire le code non utilisé
+        $codeRow = $db->table('codes_wallet')
             ->where('code', $code)
             ->where('is_used', 0)
             ->get()
             ->getRowArray();
 
-        if (!$codeData) {
+        if (! $codeRow) {
+            $db->transComplete();
             return $this->response->setJSON(['status' => 'error', 'message' => 'Code invalide ou déjà utilisé']);
         }
 
-        // Ajouter le montant au wallet
+        // Marquer comme utilisé de façon conditionnelle (optimistic update)
+        $updated = $db->table('codes_wallet')
+            ->where('id', $codeRow['id'])
+            ->where('is_used', 0)
+            ->update(['is_used' => 1, 'used_by' => $session->get('user_id'), 'used_at' => date('Y-m-d H:i:s')]);
+
+        // Vérifier que l'update a bien affecté une ligne
+        if ($db->affectedRows() === 0) {
+            $db->transComplete();
+            return $this->response->setJSON(['status' => 'error', 'message' => 'Code déjà utilisé']);
+        }
+
+        // Crédite le wallet de l'utilisateur
         $userModel = new UserModel();
         $user = $userModel->find($session->get('user_id'));
-        $nouveauSolde = $user['wallet'] + $codeData['montant'];
-        
+        $nouveauSolde = ($user['wallet'] ?? 0) + $codeRow['montant'];
         $userModel->update($session->get('user_id'), ['wallet' => $nouveauSolde]);
 
-        // Marquer le code comme utilisé
-        $db->table('codes_wallet')
-            ->where('id', $codeData['id'])
-            ->update(['is_used' => 1, 'used_by' => $session->get('user_id'), 'used_at' => date('Y-m-d H:i:s')]);
+        // Terminer la transaction
+        $db->transComplete();
 
         return $this->response->setJSON([
             'status'  => 'success',
             'message' => 'Code validé !',
             'solde'   => $nouveauSolde,
-            'montant' => $codeData['montant']
+            'montant' => $codeRow['montant']
         ]);
     }
 

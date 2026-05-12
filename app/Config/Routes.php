@@ -30,6 +30,7 @@ $routes->group('', ['filter' => 'userAuth'], static function ($routes) {
 	// Objectifs utilisateur
 	$routes->match(['get','post'], 'objectif/choisir', 'Objectif::choisir');
 	$routes->get('objectif/suggestions', 'Objectif::suggestions');
+	$routes->post('objectif/acheter/(:num)', 'Objectif::acheter/$1');
 	$routes->get('objectif/suggestions/pdf', 'Objectif::exportSuggestionsPdf');
 });
 
@@ -52,4 +53,6 @@ $routes->group('admin', ['filter' => 'adminAuth'], static function ($routes) {
 	$routes->get('codes/create',             'AdminController::codeCreate');
 	$routes->post('codes/store',             'AdminController::codeStore');
 	$routes->get('codes/delete/(:num)',      'AdminController::codeDelete/$1');
+	$routes->get('parametres',               'AdminController::parametres');
+	$routes->post('parametres',              'AdminController::parametreUpdate');
 });

@@ -26,4 +26,46 @@ class RegimeModel extends Model
             ->get()
             ->getResultArray();
     }
+
+    // Récupère les régimes avec tous les prix disponibles par durée
+    public function getRegimesAvecPrixParObjectif(string $objectif): array
+    {
+        $regimes = $this->db->table('regimes')
+            ->where('objectif', $objectif)
+            ->where('actif', 1)
+            ->orderBy('nom', 'ASC')
+            ->get()
+            ->getResultArray();
+
+        if ($regimes === []) {
+            return [];
+        }
+
+        $regimeIds = array_map(static fn (array $regime): int => (int) $regime['id'], $regimes);
+
+        $prixRows = $this->db->table('regime_prix')
+            ->select('regime_id, duree_jours, prix')
+            ->whereIn('regime_id', $regimeIds)
+            ->orderBy('duree_jours', 'ASC')
+            ->get()
+            ->getResultArray();
+
+        $prixParRegime = [];
+        foreach ($prixRows as $row) {
+            $regimeId = (int) $row['regime_id'];
+            $duree = (int) $row['duree_jours'];
+            $prixParRegime[$regimeId][$duree] = (float) $row['prix'];
+        }
+
+        foreach ($regimes as &$regime) {
+            $regimeId = (int) $regime['id'];
+            $regime['prix_par_duree'] = $prixParRegime[$regimeId] ?? [];
+            $regime['prix_min'] = $regime['prix_par_duree'] !== []
+                ? min($regime['prix_par_duree'])
+                : null;
+        }
+        unset($regime);
+
+        return $regimes;
+    }
 }

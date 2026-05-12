@@ -2,6 +2,7 @@
 
 namespace App\Controllers;
 
+use App\Models\CommandeModel;
 use App\Models\UserModel;
 
 class Dashboard extends BaseController
@@ -32,13 +33,35 @@ class Dashboard extends BaseController
         }
 
         $progression = min(100, max(0, ($imc / 40) * 100));
+        $commandeActuelle = (new CommandeModel())
+            ->select('commandes.*, regimes.nom AS regime_nom, regimes.description AS regime_description')
+            ->join('regimes', 'regimes.id = commandes.regime_id', 'left')
+            ->where('commandes.user_id', $userId)
+            ->orderBy('commandes.date_achat', 'DESC')
+            ->first();
+
+        $dateFinRegime = null;
+        $joursRestants = null;
+        if (is_array($commandeActuelle) && ! empty($commandeActuelle['date_achat']) && ! empty($commandeActuelle['duree_jours'])) {
+            $dateAchat = new \DateTimeImmutable((string) $commandeActuelle['date_achat']);
+            $dateFinRegime = $dateAchat->modify('+' . ((int) $commandeActuelle['duree_jours']) . ' days');
+            $maintenant = new \DateTimeImmutable('now');
+            if ($dateFinRegime > $maintenant) {
+                $joursRestants = (int) $maintenant->diff($dateFinRegime)->format('%a');
+            } else {
+                $joursRestants = 0;
+            }
+        }
 
         return view('dashboard/index', [
-            'user'        => $user,
-            'imc'         => $imc,
-            'categorie'   => $this->getCategorieImc($imc),
-            'progression'  => $progression,
-            'walletLabel'  => 'Ar',
+            'user' => $user,
+            'imc' => $imc,
+            'categorie' => $this->getCategorieImc($imc),
+            'progression' => $progression,
+            'walletLabel' => 'Ar',
+            'commandeActuelle' => $commandeActuelle,
+            'dateFinRegime' => $dateFinRegime,
+            'joursRestants' => $joursRestants,
         ]);
     }
 
