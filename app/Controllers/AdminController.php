@@ -117,8 +117,7 @@ class AdminController extends Controller
             $prixActuels[(int) $row['duree_jours']] = $row['prix'];
         }
 
-        $actifPost = $this->request->getPost('actif');
-        $actif = $actifPost !== null ? 1 : (int) ($regime['actif'] ?? 0);
+        $actif = $this->request->getPost('actif') ? 1 : 0;
 
         $regimeModel->update($id, [
             'nom'             => $this->request->getPost('nom'),

@@ -18,6 +18,8 @@
                     <th>Variation</th>
                     <th>Composition</th>
                     <th>Prix 30j</th>
+                    <th>Prix 60j</th>
+                    <th>Prix 90j</th>
                     <th>Actif</th>
                     <th>Actions</th>
                 </tr>
@@ -37,6 +39,24 @@
                             }
                         ?>
                         <?= $p30 ?>
+                    </td>
+                    <td>
+                        <?php
+                            $p60 = '-';
+                            foreach ($r['prix'] as $p) {
+                                if ($p['duree_jours'] == 60) $p60 = number_format($p['prix'], 0, ',', ' ') . ' Ar';
+                            }
+                        ?>
+                        <?= $p60 ?>
+                    </td>
+                    <td>
+                        <?php
+                            $p90 = '-';
+                            foreach ($r['prix'] as $p) {
+                                if ($p['duree_jours'] == 90) $p90 = number_format($p['prix'], 0, ',', ' ') . ' Ar';
+                            }
+                        ?>
+                        <?= $p90 ?>
                     </td>
                     <td><span class="badge bg-<?= $r['actif'] ? 'success' : 'secondary' ?>"><?= $r['actif'] ? 'Actif' : 'Inactif' ?></span></td>
                     <td>

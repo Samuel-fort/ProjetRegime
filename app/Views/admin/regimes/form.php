@@ -90,9 +90,13 @@ $regimeData = is_array($regime) ? $regime : [];
                     </div>
                 </div>
 
-                <div class="mb-3 form-check">
-                    <input type="checkbox" class="form-check-input" id="actif" name="actif" value="1" <?= (! empty($regimeData['actif'])) ? 'checked' : '' ?>>
-                    <label class="form-check-label" for="actif">Actif</label>
+                <div class="mb-3">
+                    <?php $actifValue = isset($regimeData['actif']) ? (int) $regimeData['actif'] : 1; ?>
+                    <label for="actif" class="form-label">Statut</label>
+                    <select id="actif" name="actif" class="form-select">
+                        <option value="1" <?= $actifValue === 1 ? 'selected' : '' ?>>Actif</option>
+                        <option value="0" <?= $actifValue === 0 ? 'selected' : '' ?>>Inactif</option>
+                    </select>
                 </div>
 
                 <div class="d-flex gap-2">
